@@ -245,6 +245,156 @@
       color: var(--text-muted);
     }
     
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 0.5rem;
+    }
+    
+    .nav-tab {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .nav-tab:hover {
+      background: var(--bg-primary);
+      color: var(--accent);
+    }
+    
+    .nav-tab.active {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+    
+    .sentence-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.2s;
+    }
+    
+    .sentence-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    
+    .sentence-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .sentence-text {
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.6;
+      flex: 1;
+    }
+    
+    .sentence-category {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 9999px;
+    }
+    
+    .sentence-section {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    
+    .sentence-section:first-of-type {
+      border-top: none;
+      padding-top: 0;
+    }
+    
+    .sentence-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .sentence-structure {
+      font-family: monospace;
+      font-size: 0.875rem;
+      background: var(--bg-primary);
+      padding: 0.75rem 1rem;
+      border-radius: 0.5rem;
+      color: var(--text-secondary);
+    }
+    
+    .grammar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .grammar-list li {
+      padding: 0.375rem 0;
+      padding-left: 1.25rem;
+      position: relative;
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+    
+    .grammar-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+    
+    .sentence-meaning {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+    
+    .sentence-scene {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    
+    .sentence-practice {
+      background: linear-gradient(135deg, #fef3c7, #fde68a);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.875rem;
+      color: #92400e;
+    }
+    
+    .dark .sentence-practice {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.2));
+      color: #fbbf24;
+    }
+    
     .word-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -444,8 +594,17 @@
       </div>
     </div>
 
+    <div class="nav-tabs">
+      <button class="nav-tab active" id="wordsTab" onclick="switchTab('words')">
+        📚 单词/词组
+      </button>
+      <button class="nav-tab" id="sentencesTab" onclick="switchTab('sentences')">
+        📝 句式解析
+      </button>
+    </div>
+
     <div class="search-box">
-      <input type="text" id="searchInput" placeholder="搜索单词、词组或含义..." oninput="filterWords()">
+      <input type="text" id="searchInput" placeholder="搜索单词、词组或含义..." oninput="handleSearch()">
     </div>
 
     <div class="categories" id="categories"></div>
@@ -488,17 +647,212 @@
       { id: '20', term: 'capacity', phonetic: '/kəˈpæsəti/', meaning: '容量；能力；产能', example: 'We are currently operating at full capacity.', note: 'at full capacity 满负荷运转；production capacity 产能；workload capacity 工作负载能力', category: '项目/任务管理' }
     ];
 
+    const sentenceData = [
+      {
+        id: 's1',
+        sentence: "I just took over this account from Sarah.",
+        structure: "主语 + 时间状语 + 谓语短语 + 宾语 + 来源状语",
+        grammar: [
+          "现在完成时：have/has + 过去分词 (just 表示刚刚完成)",
+          "take over 动词短语：接管、接手",
+          "from + 人名：表示从某人那里接手"
+        ],
+        meaning: "我刚从莎拉那里接手了这个账户。",
+        scene: "工作交接场景，向他人说明自己刚接手某个项目/账户/任务",
+        practice: "替换：I just took over [this project/account/position] from [同事名字].",
+        category: "任务交接"
+      },
+      {
+        id: 's2',
+        sentence: "We need to mitigate the risks before proceeding.",
+        structure: "主语 + 谓语 + 不定式短语 + 时间状语从句",
+        grammar: [
+          "need to do sth.：需要做某事",
+          "mitigate：及物动词，降低、缓解（正式用语）",
+          "before + doing：在做...之前"
+        ],
+        meaning: "在继续推进之前，我们需要先降低风险。",
+        scene: "项目管理中，强调风险控制的重要性，通常在启动新项目或变更前使用",
+        practice: "替换：We need to mitigate [the issues/challenges/problems] before [moving forward/launching].",
+        category: "项目/任务管理"
+      },
+      {
+        id: 's3',
+        sentence: "I have some concerns about the project timeline.",
+        structure: "主语 + 谓语 + 宾语 + 介词短语",
+        grammar: [
+          "have concerns about：对...有顾虑/担忧（礼貌表达）",
+          "some：用于缓和语气，比直接说 'I have concerns' 更委婉",
+          "timeline：时间线、进度安排"
+        ],
+        meaning: "我对项目的时间安排有一些顾虑。",
+        scene: "会议或邮件中，委婉地提出对某个计划或方案的不同意见",
+        practice: "替换：I have some concerns about [the budget/resources/approach].",
+        category: "会议讨论"
+      }
+    ];
+
     const categories = ['全部', '项目/任务管理', '会议讨论', '时间表达', '邮件沟通', '工作汇报', '日常沟通'];
+    const sentenceCategories = ['全部', '任务交接', '项目/任务管理', '会议讨论', '邮件沟通', '工作汇报'];
     
     let selectedCategory = '全部';
+    let selectedSentenceCategory = '全部';
     let searchQuery = '';
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+    let currentTab = 'words';
 
     function init() {
       renderCategories();
       filterWords();
       updateStats();
       loadTheme();
+    }
+
+    function switchTab(tab) {
+      currentTab = tab;
+      
+      // 更新标签样式
+      document.getElementById('wordsTab').classList.toggle('active', tab === 'words');
+      document.getElementById('sentencesTab').classList.toggle('active', tab === 'sentences');
+      
+      // 更新搜索框提示
+      const searchInput = document.getElementById('searchInput');
+      searchInput.placeholder = tab === 'words' 
+        ? '搜索单词、词组或含义...' 
+        : '搜索句子、句型或场景...';
+      
+      // 更新分类
+      selectedCategory = '全部';
+      selectedSentenceCategory = '全部';
+      renderCategories();
+      
+      // 重新渲染
+      if (tab === 'words') {
+        filterWords();
+      } else {
+        filterSentences();
+      }
+      
+      // 更新标题
+      document.getElementById('sectionTitle').textContent = '全部词条';
+    }
+
+    function handleSearch() {
+      if (currentTab === 'words') {
+        filterWords();
+      } else {
+        filterSentences();
+      }
+    }
+
+    function renderCategories() {
+      const container = document.getElementById('categories');
+      const cats = currentTab === 'words' ? categories : sentenceCategories;
+      const counts = currentTab === 'words' ? getCategoryCounts() : getSentenceCategoryCounts();
+      const selected = currentTab === 'words' ? selectedCategory : selectedSentenceCategory;
+      
+      container.innerHTML = cats.map(cat => `
+        <button class="category-btn ${selected === cat ? 'active' : ''}" onclick="selectCategory('${cat}')">
+          ${cat}
+          ${cat !== '全部' ? `<span class="count">${counts[cat] || 0}</span>` : ''}
+        </button>
+      `).join('');
+    }
+
+    function getSentenceCategoryCounts() {
+      const counts = {};
+      sentenceData.forEach(s => {
+        counts[s.category] = (counts[s.category] || 0) + 1;
+      });
+      return counts;
+    }
+
+    function selectCategory(cat) {
+      if (currentTab === 'words') {
+        selectedCategory = cat;
+        renderCategories();
+        filterWords();
+        document.getElementById('sectionTitle').textContent = cat === '全部' ? '全部词条' : cat;
+      } else {
+        selectedSentenceCategory = cat;
+        renderCategories();
+        filterSentences();
+        document.getElementById('sectionTitle').textContent = cat === '全部' ? '全部句式' : cat;
+      }
+    }
+
+    function filterSentences() {
+      searchQuery = document.getElementById('searchInput').value.toLowerCase();
+      
+      const filtered = sentenceData.filter(s => {
+        const matchesSearch = !searchQuery || 
+          s.sentence.toLowerCase().includes(searchQuery) ||
+          s.meaning.toLowerCase().includes(searchQuery) ||
+          s.structure.toLowerCase().includes(searchQuery) ||
+          s.scene.toLowerCase().includes(searchQuery);
+        
+        const matchesCategory = selectedSentenceCategory === '全部' || s.category === selectedSentenceCategory;
+        
+        return matchesSearch && matchesCategory;
+      });
+      
+      renderSentences(filtered);
+      document.getElementById('resultCount').textContent = `共 ${filtered.length} 条`;
+    }
+
+    function renderSentences(sentences) {
+      const container = document.getElementById('wordList');
+      
+      if (sentences.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <div class="empty-state-icon">📝</div>
+            <h3>没有找到相关句式</h3>
+            <p>试试其他关键词或分类</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = sentences.map(s => `
+        <div class="sentence-card">
+          <div class="sentence-header">
+            <div class="sentence-text">"${s.sentence}"</div>
+            <div style="display:flex;gap:0.5rem;align-items:flex-start;">
+              <span class="sentence-category">${s.category}</span>
+              <button onclick="speak('${s.sentence.replace(/'/g, "\\'")}')" style="width:32px;height:32px;border-radius:8px;border:none;background:var(--bg-primary);color:var(--text-muted);cursor:pointer;font-size:1rem;transition:all 0.2s;" title="播放句子">🔊</button>
+            </div>
+          </div>
+          
+          <div class="sentence-section">
+            <div class="sentence-label">📐 句型结构</div>
+            <div class="sentence-structure">${s.structure}</div>
+          </div>
+          
+          <div class="sentence-section">
+            <div class="sentence-label">📖 语法要点</div>
+            <ul class="grammar-list">
+              ${s.grammar.map(g => `<li>${g}</li>`).join('')}
+            </ul>
+          </div>
+          
+          <div class="sentence-section">
+            <div class="sentence-label">💡 中文含义</div>
+            <div class="sentence-meaning">${s.meaning}</div>
+          </div>
+          
+          <div class="sentence-section">
+            <div class="sentence-label">🎯 使用场景</div>
+            <div class="sentence-scene">${s.scene}</div>
+          </div>
+          
+          <div class="sentence-section" style="border-top:none;padding-top:0.5rem;">
+            <div class="sentence-practice">
+              <strong>✏️ 替换练习：</strong>${s.practice}
+            </div>
+          </div>
+        </div>
+      `).join('');
     }
 
     function renderCategories() {
@@ -612,7 +966,8 @@
     }
 
     function updateStats() {
-      document.getElementById('totalWords').textContent = wordsData.length;
+      const totalItems = wordsData.length + sentenceData.length;
+      document.getElementById('totalWords').textContent = totalItems;
       document.getElementById('totalCategories').textContent = categories.length - 1;
       document.getElementById('totalBookmarks').textContent = bookmarks.length;
     }
