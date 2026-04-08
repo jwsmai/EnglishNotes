@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>职场英语笔记 | Workplace English Notes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    :root {
+      --bg-primary: #f8fafc;
+      --bg-secondary: #ffffff;
+      --bg-card: #ffffff;
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --accent: #2563eb;
+      --accent-light: #dbeafe;
+      --accent-dark: #1d4ed8;
+      --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    }
+    
+    .dark {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-muted: #64748b;
+      --border: #334155;
+      --accent: #3b82f6;
+      --accent-light: rgba(59, 130, 246, 0.2);
+      --accent-dark: #60a5fa;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    
+    header {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    
+    .header-content {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+    
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+    }
+    
+    .logo-text h1 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    
+    .logo-text p {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    
+    .btn-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: none;
+      background: var(--bg-primary);
+      color: var(--text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    
+    .btn-icon:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+    
+    main {
+      padding: 2rem 0;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+      color: white;
+      padding: 1rem;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    
+    .stat-card.purple {
+      background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    }
+    
+    .stat-card.orange {
+      background: linear-gradient(135deg, #f59e0b, #ea580c);
+    }
+    
+    .stat-info p {
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+    
+    .stat-info h3 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    
+    .stat-icon {
+      font-size: 1.5rem;
+      opacity: 0.8;
+    }
+    
+    .search-box {
+      position: relative;
+      margin-bottom: 1.5rem;
+    }
+    
+    .search-box input {
+      width: 100%;
+      padding: 1rem 1rem 1rem 3rem;
+      border-radius: 1rem;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px var(--accent-light);
+    }
+    
+    .search-box::before {
+      content: "🔍";
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 1.25rem;
+    }
+    
+    .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .category-btn {
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: none;
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid var(--border);
+    }
+    
+    .category-btn:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+    
+    .category-btn.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+    
+    .category-btn .count {
+      margin-left: 0.25rem;
+      opacity: 0.7;
+    }
+    
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    
+    .section-header h2 {
+      font-size: 1.125rem;
+      font-weight: 600;
+    }
+    
+    .section-header span {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    
+    .word-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1rem;
+    }
+    
+    .word-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.2s;
+    }
+    
+    .word-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    
+    .word-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .word-title h3 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+    
+    .word-phonetic {
+      font-family: monospace;
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    
+    .word-category {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: var(--accent-light);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 9999px;
+      margin-top: 0.5rem;
+    }
+    
+    .word-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    
+    .word-actions button {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: var(--bg-primary);
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      transition: all 0.2s;
+    }
+    
+    .word-actions button:hover {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+    
+    .word-actions button.bookmarked {
+      background: #fef3c7;
+      color: #f59e0b;
+    }
+    
+    .word-section {
+      margin-top: 1rem;
+    }
+    
+    .word-section-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.25rem;
+    }
+    
+    .word-meaning {
+      color: var(--text-secondary);
+    }
+    
+    .word-example {
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    
+    .word-note {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      padding-top: 0.75rem;
+      border-top: 1px solid var(--border);
+      margin-top: 0.75rem;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 4rem 2rem;
+    }
+    
+    .empty-state-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      opacity: 0.5;
+    }
+    
+    .empty-state h3 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    
+    .empty-state p {
+      color: var(--text-muted);
+    }
+    
+    footer {
+      border-top: 1px solid var(--border);
+      margin-top: 4rem;
+      padding: 2rem 0;
+      text-align: center;
+    }
+    
+    footer p {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+    }
+    
+    @media (max-width: 768px) {
+      .stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .word-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .categories {
+        overflow-x: auto;
+        flex-wrap: nowrap;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">📚</div>
+          <div class="logo-text">
+            <h1>职场英语笔记</h1>
+            <p>Workplace English Notes</p>
+          </div>
+        </div>
+        <button class="btn-icon" onclick="toggleTheme()" id="themeBtn">🌙</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-info">
+          <p>总词条</p>
+          <h3 id="totalWords">0</h3>
+        </div>
+        <span class="stat-icon">📖</span>
+      </div>
+      <div class="stat-card purple">
+        <div class="stat-info">
+          <p>分类</p>
+          <h3 id="totalCategories">0</h3>
+        </div>
+        <span class="stat-icon">🏷️</span>
+      </div>
+      <div class="stat-card orange">
+        <div class="stat-info">
+          <p>收藏</p>
+          <h3 id="totalBookmarks">0</h3>
+        </div>
+        <span class="stat-icon">⭐</span>
+      </div>
+    </div>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="搜索单词、词组或含义..." oninput="filterWords()">
+    </div>
+
+    <div class="categories" id="categories"></div>
+
+    <div class="section-header">
+      <h2 id="sectionTitle">全部词条</h2>
+      <span id="resultCount">共 0 条</span>
+    </div>
+
+    <div class="word-grid" id="wordList"></div>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Workplace English Notes · 职场英语笔记</p>
+    </div>
+  </footer>
+
+  <script>
+    const wordsData = [
+      { id: '1', term: 'duration', phonetic: '/dʊˈreɪʃn/', meaning: '持续时间', example: 'The duration of the project is three months.', note: '项目周期、会议时长', category: '项目/任务管理' },
+      { id: '2', term: 'kick off', phonetic: '/kɪk ɔːf/', meaning: '启动', example: "Let's kick off the meeting at 2 PM.", note: '项目启动、会议开始', category: '项目/任务管理' },
+      { id: '3', term: 'take over', phonetic: '/teɪk ˈoʊvər/', meaning: '接管、接手', example: 'I just took over this account from Sarah.', note: '工作交接场景，可接 project/account/task/position', category: '项目/任务管理' },
+      { id: '4', term: 'enhancement', phonetic: '/ɪnˈhænsmənt/', meaning: '增强、改进', example: 'This is a feature enhancement request.', note: '功能改进、优化', category: '项目/任务管理' },
+      { id: '5', term: 'data validation', phonetic: '/ˈdeɪtə vælɪˈdeɪʃn/', meaning: '数据验证', example: 'We need to add data validation for this field.', note: '技术场景常用', category: '项目/任务管理' },
+      { id: '6', term: 'discrepancy', phonetic: '/dɪˈskrepənsi/', meaning: '差异、不符', example: "There's a discrepancy between the two reports.", note: '数据核对、审计场景常用', category: '项目/任务管理' },
+      { id: '7', term: 'procedure', phonetic: '/prəˈsiːdʒər/', meaning: '程序、流程、步骤', example: 'Please follow the standard operating procedure.', note: 'SOP = Standard Operating Procedure；formal procedure 正式程序', category: '项目/任务管理' },
+      { id: '8', term: 'state', phonetic: '/steɪt/', meaning: '陈述、说明；状态', example: 'Please state your reasons for the delay.', note: '动词用法较正式；current state 当前状态；in a good state 状态良好', category: '项目/任务管理' },
+      { id: '9', term: 'attendee', phonetic: '/əˌtenˈdiː/', meaning: '参会者、出席者', example: 'All attendees should receive the meeting invite.', note: '正式用词，participant 更通用', category: '会议讨论' },
+      { id: '10', term: 'attendance', phonetic: '/əˈtendəns/', meaning: '出席、出勤', example: 'Your attendance is required at the quarterly review.', note: 'take attendance 点名；attendance rate 出勤率', category: '会议讨论' },
+      { id: '11', term: 'absent', phonetic: '/ˈæbsənt/ adj. /æbˈsent/ v.', meaning: '缺席的；缺席', example: 'Three team members were absent from the meeting.', note: '反义词：present；absent from 缺席...', category: '会议讨论' },
+      { id: '12', term: 'present', phonetic: '/ˈpreznt/ adj./n. /prɪˈzent/ v.', meaning: '出席的；礼物；呈现', example: "All managers are present today. / I'll present the findings tomorrow.", note: '作动词时重音在第二音节；present a proposal 提交方案', category: '会议讨论' },
+      { id: '13', term: 'insist', phonetic: '/ɪnˈsɪst/', meaning: '坚持、坚决要求', example: 'I must insist that we follow the standard procedure.', note: '语气较强；insist on + doing；insist that + 从句', category: '会议讨论' },
+      { id: '14', term: 'poll', phonetic: '/poʊl/', meaning: '投票、民意调查', example: "Let's take a quick poll to decide on the meeting time.", note: '可作动词或名词；conduct a poll 进行投票', category: '会议讨论' },
+      { id: '15', term: 'in the past', phonetic: '/ɪn ðə pæst/', meaning: '在过去', example: 'In the past, we used a different system.', note: '与现在完成时或过去时连用；注意：英式英语中常与现在完成时连用', category: '时间表达' }
+    ];
+
+    const categories = ['全部', '项目/任务管理', '会议讨论', '时间表达', '邮件沟通', '工作汇报', '日常沟通'];
+    
+    let selectedCategory = '全部';
+    let searchQuery = '';
+    let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+
+    function init() {
+      renderCategories();
+      filterWords();
+      updateStats();
+      loadTheme();
+    }
+
+    function renderCategories() {
+      const container = document.getElementById('categories');
+      const counts = getCategoryCounts();
+      
+      container.innerHTML = categories.map(cat => `
+        <button class="category-btn ${selectedCategory === cat ? 'active' : ''}" onclick="selectCategory('${cat}')">
+          ${cat}
+          ${cat !== '全部' ? `<span class="count">${counts[cat] || 0}</span>` : ''}
+        </button>
+      `).join('');
+    }
+
+    function getCategoryCounts() {
+      const counts = {};
+      wordsData.forEach(w => {
+        counts[w.category] = (counts[w.category] || 0) + 1;
+      });
+      return counts;
+    }
+
+    function selectCategory(cat) {
+      selectedCategory = cat;
+      renderCategories();
+      filterWords();
+      document.getElementById('sectionTitle').textContent = cat === '全部' ? '全部词条' : cat;
+    }
+
+    function filterWords() {
+      searchQuery = document.getElementById('searchInput').value.toLowerCase();
+      
+      const filtered = wordsData.filter(w => {
+        const matchesSearch = !searchQuery || 
+          w.term.toLowerCase().includes(searchQuery) ||
+          w.meaning.toLowerCase().includes(searchQuery) ||
+          w.example.toLowerCase().includes(searchQuery) ||
+          w.note.toLowerCase().includes(searchQuery);
+        
+        const matchesCategory = selectedCategory === '全部' || w.category === selectedCategory;
+        
+        return matchesSearch && matchesCategory;
+      });
+      
+      renderWords(filtered);
+      document.getElementById('resultCount').textContent = `共 ${filtered.length} 条`;
+    }
+
+    function renderWords(words) {
+      const container = document.getElementById('wordList');
+      
+      if (words.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <div class="empty-state-icon">📚</div>
+            <h3>没有找到相关词条</h3>
+            <p>试试其他关键词或分类</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = words.map(word => `
+        <div class="word-card">
+          <div class="word-header">
+            <div class="word-title">
+              <h3>${word.term}</h3>
+              <span class="word-phonetic">${word.phonetic}</span>
+              <span class="word-category">${word.category}</span>
+            </div>
+            <div class="word-actions">
+              <button onclick="speak('${word.term.replace(/'/g, "\\'")}')" title="播放发音">🔊</button>
+              <button onclick="toggleBookmark('${word.id}')" class="${bookmarks.includes(word.id) ? 'bookmarked' : ''}" title="收藏">⭐</button>
+            </div>
+          </div>
+          <div class="word-section">
+            <div class="word-section-label">含义</div>
+            <div class="word-meaning">${word.meaning}</div>
+          </div>
+          <div class="word-section">
+            <div class="word-section-label">例句</div>
+            <div class="word-example">"${word.example}"</div>
+          </div>
+          ${word.note ? `
+          <div class="word-note">
+            <strong>备注：</strong>${word.note}
+          </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    function speak(text) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      speechSynthesis.speak(utterance);
+    }
+
+    function toggleBookmark(id) {
+      if (bookmarks.includes(id)) {
+        bookmarks = bookmarks.filter(b => b !== id);
+      } else {
+        bookmarks.push(id);
+      }
+      localStorage.setItem('bookmarks', JSON.stringify(bookmarks));
+      filterWords();
+      updateStats();
+    }
+
+    function updateStats() {
+      document.getElementById('totalWords').textContent = wordsData.length;
+      document.getElementById('totalCategories').textContent = categories.length - 1;
+      document.getElementById('totalBookmarks').textContent = bookmarks.length;
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.toggle('dark');
+      localStorage.setItem('darkMode', isDark);
+      document.getElementById('themeBtn').textContent = isDark ? '☀️' : '🌙';
+    }
+
+    function loadTheme() {
+      const isDark = localStorage.getItem('darkMode') === 'true' || 
+        (!localStorage.getItem('darkMode') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        document.getElementById('themeBtn').textContent = '☀️';
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
