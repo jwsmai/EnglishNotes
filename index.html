@@ -1013,6 +1013,47 @@
         `;
         return;
       }
+      
+      container.innerHTML = sentences.map(s => `
+        <div class="sentence-card">
+          <div class="sentence-header">
+            <div class="sentence-text">"${s.sentence}"</div>
+            <div style="display:flex;gap:0.5rem;align-items:flex-start;">
+              <span class="sentence-category">${s.category}</span>
+              <button onclick="speak('${s.sentence.replace(/'/g, "\\'")}')" style="width:32px;height:32px;border-radius:8px;border:none;background:var(--bg-primary);color:var(--text-muted);cursor:pointer;font-size:1rem;transition:all 0.2s;" title="播放句子">🔊</button>
+            </div>
+          </div>
+          
+          <div class="sentence-section">
+            <div class="sentence-label">📐 句型结构</div>
+            <div class="sentence-structure">${s.structure}</div>
+          </div>
+          
+          <div class="sentence-section">
+            <div class="sentence-label">📖 语法要点</div>
+            <ul class="grammar-list">
+              ${s.grammar.map(g => `<li>${g}</li>`).join('')}
+            </ul>
+          </div>
+          
+          <div class="sentence-section">
+            <div class="sentence-label">💡 中文含义</div>
+            <div class="sentence-meaning">${s.meaning}</div>
+          </div>
+          
+          <div class="sentence-section">
+            <div class="sentence-label">🎯 使用场景</div>
+            <div class="sentence-scene">${s.scene}</div>
+          </div>
+          
+          <div class="sentence-section" style="border-top:none;padding-top:0.5rem;">
+            <div class="sentence-practice">
+              <strong>✏️ 替换练习：</strong>${s.practice}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
 
     function filterNotes() {
       searchQuery = document.getElementById('searchInput').value.toLowerCase();
@@ -1075,59 +1116,7 @@
         </div>
       `).join('');
     }
-      
-      container.innerHTML = sentences.map(s => `
-        <div class="sentence-card">
-          <div class="sentence-header">
-            <div class="sentence-text">"${s.sentence}"</div>
-            <div style="display:flex;gap:0.5rem;align-items:flex-start;">
-              <span class="sentence-category">${s.category}</span>
-              <button onclick="speak('${s.sentence.replace(/'/g, "\\'")}')" style="width:32px;height:32px;border-radius:8px;border:none;background:var(--bg-primary);color:var(--text-muted);cursor:pointer;font-size:1rem;transition:all 0.2s;" title="播放句子">🔊</button>
-            </div>
-          </div>
-          
-          <div class="sentence-section">
-            <div class="sentence-label">📐 句型结构</div>
-            <div class="sentence-structure">${s.structure}</div>
-          </div>
-          
-          <div class="sentence-section">
-            <div class="sentence-label">📖 语法要点</div>
-            <ul class="grammar-list">
-              ${s.grammar.map(g => `<li>${g}</li>`).join('')}
-            </ul>
-          </div>
-          
-          <div class="sentence-section">
-            <div class="sentence-label">💡 中文含义</div>
-            <div class="sentence-meaning">${s.meaning}</div>
-          </div>
-          
-          <div class="sentence-section">
-            <div class="sentence-label">🎯 使用场景</div>
-            <div class="sentence-scene">${s.scene}</div>
-          </div>
-          
-          <div class="sentence-section" style="border-top:none;padding-top:0.5rem;">
-            <div class="sentence-practice">
-              <strong>✏️ 替换练习：</strong>${s.practice}
-            </div>
-          </div>
-        </div>
-      `).join('');
-    }
 
-    function renderCategories() {
-      const container = document.getElementById('categories');
-      const counts = getCategoryCounts();
-      
-      container.innerHTML = categories.map(cat => `
-        <button class="category-btn ${selectedCategory === cat ? 'active' : ''}" onclick="selectCategory('${cat}')">
-          ${cat}
-          ${cat !== '全部' ? `<span class="count">${counts[cat] || 0}</span>` : ''}
-        </button>
-      `).join('');
-    }
 
     function getCategoryCounts() {
       const counts = {};
@@ -1135,13 +1124,6 @@
         counts[w.category] = (counts[w.category] || 0) + 1;
       });
       return counts;
-    }
-
-    function selectCategory(cat) {
-      selectedCategory = cat;
-      renderCategories();
-      filterWords();
-      document.getElementById('sectionTitle').textContent = cat === '全部' ? '全部词条' : cat;
     }
 
     function filterWords() {
