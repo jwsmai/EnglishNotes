@@ -395,6 +395,135 @@
       color: #fbbf24;
     }
     
+    .note-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      transition: all 0.2s;
+    }
+    
+    .note-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    
+    .note-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    
+    .note-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    
+    .note-topic {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      border-radius: 9999px;
+    }
+    
+    .note-question {
+      background: var(--bg-primary);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--text-secondary);
+      border-left: 4px solid var(--accent);
+      margin-bottom: 1rem;
+    }
+    
+    .note-question::before {
+      content: "❓ ";
+    }
+    
+    .note-content {
+      color: var(--text-secondary);
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+    
+    .note-content p {
+      margin-bottom: 0.75rem;
+    }
+    
+    .note-content strong {
+      color: var(--text-primary);
+    }
+    
+    .note-content ul {
+      margin: 0.5rem 0;
+      padding-left: 1.5rem;
+    }
+    
+    .note-content li {
+      margin-bottom: 0.5rem;
+    }
+    
+    .note-conclusion {
+      background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+      padding: 1rem;
+      border-radius: 0.75rem;
+      margin-bottom: 1rem;
+    }
+    
+    .dark .note-conclusion {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.2));
+    }
+    
+    .note-conclusion-label {
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .note-examples {
+      background: var(--bg-primary);
+      padding: 1rem;
+      border-radius: 0.75rem;
+    }
+    
+    .note-examples-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.75rem;
+    }
+    
+    .note-example-item {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.9rem;
+    }
+    
+    .note-example-item:last-child {
+      border-bottom: none;
+    }
+    
+    .note-example-en {
+      color: var(--text-primary);
+      margin-bottom: 0.25rem;
+    }
+    
+    .note-example-cn {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+    }
+    
     .word-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -601,6 +730,9 @@
       <button class="nav-tab" id="sentencesTab" onclick="switchTab('sentences')">
         📝 句式解析
       </button>
+      <button class="nav-tab" id="notesTab" onclick="switchTab('notes')">
+        📋 笔记卡片
+      </button>
     </div>
 
     <div class="search-box">
@@ -692,11 +824,44 @@
       }
     ];
 
+    const noteData = [
+      {
+        id: 'n1',
+        title: 'whether vs if',
+        topic: '语法对比',
+        question: 'whether 和 if 在职场英语中哪个更常用？',
+        content: `<p><strong>核心区别：</strong></p>
+        <p><strong>if</strong> 更口语化，<strong>whether</strong> 更正式。在职场商务场景中，<strong>whether 更常用</strong>，显得更专业。</p>
+        
+        <p><strong>只能用 whether 的情况：</strong></p>
+        <ul>
+          <li>与 <strong>or not</strong> 连用：I don't know whether or not he'll come.</li>
+          <li>介词后：It depends on whether we have enough time.</li>
+          <li>不定式前：I can't decide whether to accept the offer.</li>
+          <li>主语从句放句首：Whether he will join us is still uncertain.</li>
+        </ul>
+        
+        <p><strong>两者都可用的情况：</strong></p>
+        <ul>
+          <li>引导宾语从句：I wonder if/whether they will agree.</li>
+        </ul>`,
+        conclusion: '职场写作和正式场合优先使用 whether，显得更专业；口语交流可用 if。',
+        examples: [
+          { en: "Please let me know whether you need any clarification.", cn: "请告知您是否需要任何澄清。（正式邮件）" },
+          { en: "We need to determine whether the timeline is feasible.", cn: "我们需要确认时间线是否可行。（会议）" },
+          { en: "I'm not sure if this is the right approach.", cn: "我不确定这是否是正确的方法。（口语/非正式）" }
+        ],
+        category: "语法"
+      }
+    ];
+
     const categories = ['全部', '项目/任务管理', '会议讨论', '时间表达', '邮件沟通', '工作汇报', '日常沟通'];
     const sentenceCategories = ['全部', '任务交接', '项目/任务管理', '会议讨论', '邮件沟通', '工作汇报'];
+    const noteCategories = ['全部', '语法', '用法', '场景', '技巧'];
     
     let selectedCategory = '全部';
     let selectedSentenceCategory = '全部';
+    let selectedNoteCategory = '全部';
     let searchQuery = '';
     let bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
     let currentTab = 'words';
@@ -714,42 +879,64 @@
       // 更新标签样式
       document.getElementById('wordsTab').classList.toggle('active', tab === 'words');
       document.getElementById('sentencesTab').classList.toggle('active', tab === 'sentences');
+      document.getElementById('notesTab').classList.toggle('active', tab === 'notes');
       
       // 更新搜索框提示
       const searchInput = document.getElementById('searchInput');
-      searchInput.placeholder = tab === 'words' 
-        ? '搜索单词、词组或含义...' 
-        : '搜索句子、句型或场景...';
+      if (tab === 'words') {
+        searchInput.placeholder = '搜索单词、词组或含义...';
+      } else if (tab === 'sentences') {
+        searchInput.placeholder = '搜索句子、句型或场景...';
+      } else {
+        searchInput.placeholder = '搜索笔记主题、问题或内容...';
+      }
       
       // 更新分类
       selectedCategory = '全部';
       selectedSentenceCategory = '全部';
+      selectedNoteCategory = '全部';
       renderCategories();
       
       // 重新渲染
       if (tab === 'words') {
         filterWords();
-      } else {
+        document.getElementById('sectionTitle').textContent = '全部词条';
+      } else if (tab === 'sentences') {
         filterSentences();
+        document.getElementById('sectionTitle').textContent = '全部句式';
+      } else {
+        filterNotes();
+        document.getElementById('sectionTitle').textContent = '全部笔记';
       }
-      
-      // 更新标题
-      document.getElementById('sectionTitle').textContent = '全部词条';
     }
 
     function handleSearch() {
       if (currentTab === 'words') {
         filterWords();
-      } else {
+      } else if (currentTab === 'sentences') {
         filterSentences();
+      } else {
+        filterNotes();
       }
     }
 
     function renderCategories() {
       const container = document.getElementById('categories');
-      const cats = currentTab === 'words' ? categories : sentenceCategories;
-      const counts = currentTab === 'words' ? getCategoryCounts() : getSentenceCategoryCounts();
-      const selected = currentTab === 'words' ? selectedCategory : selectedSentenceCategory;
+      let cats, counts, selected;
+      
+      if (currentTab === 'words') {
+        cats = categories;
+        counts = getCategoryCounts();
+        selected = selectedCategory;
+      } else if (currentTab === 'sentences') {
+        cats = sentenceCategories;
+        counts = getSentenceCategoryCounts();
+        selected = selectedSentenceCategory;
+      } else {
+        cats = noteCategories;
+        counts = getNoteCategoryCounts();
+        selected = selectedNoteCategory;
+      }
       
       container.innerHTML = cats.map(cat => `
         <button class="category-btn ${selected === cat ? 'active' : ''}" onclick="selectCategory('${cat}')">
@@ -767,17 +954,30 @@
       return counts;
     }
 
+    function getNoteCategoryCounts() {
+      const counts = {};
+      noteData.forEach(n => {
+        counts[n.category] = (counts[n.category] || 0) + 1;
+      });
+      return counts;
+    }
+
     function selectCategory(cat) {
       if (currentTab === 'words') {
         selectedCategory = cat;
         renderCategories();
         filterWords();
         document.getElementById('sectionTitle').textContent = cat === '全部' ? '全部词条' : cat;
-      } else {
+      } else if (currentTab === 'sentences') {
         selectedSentenceCategory = cat;
         renderCategories();
         filterSentences();
         document.getElementById('sectionTitle').textContent = cat === '全部' ? '全部句式' : cat;
+      } else {
+        selectedNoteCategory = cat;
+        renderCategories();
+        filterNotes();
+        document.getElementById('sectionTitle').textContent = cat === '全部' ? '全部笔记' : cat;
       }
     }
 
@@ -813,6 +1013,68 @@
         `;
         return;
       }
+
+    function filterNotes() {
+      searchQuery = document.getElementById('searchInput').value.toLowerCase();
+      
+      const filtered = noteData.filter(n => {
+        const matchesSearch = !searchQuery || 
+          n.title.toLowerCase().includes(searchQuery) ||
+          n.question.toLowerCase().includes(searchQuery) ||
+          n.content.toLowerCase().includes(searchQuery) ||
+          n.conclusion.toLowerCase().includes(searchQuery);
+        
+        const matchesCategory = selectedNoteCategory === '全部' || n.category === selectedNoteCategory;
+        
+        return matchesSearch && matchesCategory;
+      });
+      
+      renderNotes(filtered);
+      document.getElementById('resultCount').textContent = `共 ${filtered.length} 条`;
+    }
+
+    function renderNotes(notes) {
+      const container = document.getElementById('wordList');
+      
+      if (notes.length === 0) {
+        container.innerHTML = `
+          <div class="empty-state" style="grid-column: 1 / -1;">
+            <div class="empty-state-icon">📋</div>
+            <h3>没有找到相关笔记</h3>
+            <p>试试其他关键词或分类</p>
+          </div>
+        `;
+        return;
+      }
+      
+      container.innerHTML = notes.map(n => `
+        <div class="note-card">
+          <div class="note-header">
+            <div class="note-title">${n.title}</div>
+            <span class="note-topic">${n.topic}</span>
+          </div>
+          
+          <div class="note-question">${n.question}</div>
+          
+          <div class="note-content">${n.content}</div>
+          
+          <div class="note-conclusion">
+            <div class="note-conclusion-label">💡 核心建议</div>
+            <div>${n.conclusion}</div>
+          </div>
+          
+          <div class="note-examples">
+            <div class="note-examples-label">例句参考</div>
+            ${n.examples.map(ex => `
+              <div class="note-example-item">
+                <div class="note-example-en">${ex.en}</div>
+                <div class="note-example-cn">${ex.cn}</div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
       
       container.innerHTML = sentences.map(s => `
         <div class="sentence-card">
@@ -966,7 +1228,7 @@
     }
 
     function updateStats() {
-      const totalItems = wordsData.length + sentenceData.length;
+      const totalItems = wordsData.length + sentenceData.length + noteData.length;
       document.getElementById('totalWords').textContent = totalItems;
       document.getElementById('totalCategories').textContent = categories.length - 1;
       document.getElementById('totalBookmarks').textContent = bookmarks.length;
